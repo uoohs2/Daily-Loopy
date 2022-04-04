@@ -46,6 +46,7 @@ const ImageCircle = styled.div`
   width: var(--size);
   height: var(--size);
   border-radius: var(--size);
+  border: 2px solid pink;
 
   background-image: url("${(props) => props.src_02}");
   background-size: cover;

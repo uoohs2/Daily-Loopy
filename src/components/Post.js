@@ -26,13 +26,13 @@ const Post = (props) => {
 
 Post.defaultProps = {
   user_info: {
-    user_name: "루피의 일상",
+    user_name: "uooh",
     user_profile:
       "https://mblogthumb-phinf.pstatic.net/MjAyMDA4MDNfMjAx/MDAxNTk2NDQ1NjUzODA0.cUdM6Gatr8jKhmBwWFhGJaeVg6t0wPwkwshA11gZuY0g.zot86j9Rxj7824AkPhlT_5Bv3MkaP2-MxCELXiMks9kg.JPEG.hwadamtat/IMG_5813.JPG?type=w800",
   },
   image_url:
     "https://mblogthumb-phinf.pstatic.net/MjAyMDA4MDNfMjAx/MDAxNTk2NDQ1NjUzODA0.cUdM6Gatr8jKhmBwWFhGJaeVg6t0wPwkwshA11gZuY0g.zot86j9Rxj7824AkPhlT_5Bv3MkaP2-MxCELXiMks9kg.JPEG.hwadamtat/IMG_5813.JPG?type=w800",
-  contents: "이불밖은 위험해!",
+  contents: "이불속에 평생 누워있을래,,",
   comment_count: 10,
   insert_daytime: "2022-04-01 21:00:00",
 };

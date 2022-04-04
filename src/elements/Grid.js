@@ -10,11 +10,7 @@ const Grid = (props) => {
     padding: padding,
     bg: bg,
   };
-  return (
-    <React.Fragment>
-      <GridBox {...styles}>{children}</GridBox>
-    </React.Fragment>
-  );
+  return <GridBox {...styles}>{children}</GridBox>;
 };
 Grid.defaultProps = {
   children: null,
