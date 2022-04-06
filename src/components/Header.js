@@ -7,6 +7,7 @@ import { actionCreators as userActions } from "../redux/modules/user";
 
 import { history } from "../redux/configureStore";
 import { apiKey } from "../shared/firebase";
+import Permit from "../shared/Permit";
 
 const Header = (props) => {
   const dispatch = useDispatch();
@@ -18,19 +19,34 @@ const Header = (props) => {
     return (
       <React.Fragment>
         <Grid is_flex padding="5px 0px">
-          <Grid>
-            <Text size="24px" bold>
-              루피의 일상
-            </Text>
+          <Grid padding="0px 5px">
+            <Button
+              no_bg
+              _onClick={() => {
+                // window.location.replace("/");
+                history.push("/");
+              }}
+            >
+              <Text size="24px" bold>
+                루피의 일상
+              </Text>
+            </Button>
           </Grid>
           <Grid is_flex>
-            <Button text="내정보"></Button>
-            <Button text="알림"></Button>
+            <Button text="내정보" margin="0 3px"></Button>
+            <Button
+              text="알림"
+              _onClick={() => {
+                history.push("/notification");
+              }}
+              margin="0 3px"
+            ></Button>
             <Button
               text="로그아웃"
               _onClick={() => {
                 dispatch(userActions.logoutFB());
               }}
+              margin="0 3px"
             ></Button>
           </Grid>
         </Grid>
@@ -41,10 +57,17 @@ const Header = (props) => {
   return (
     <React.Fragment>
       <Grid is_flex padding="5px 0px">
-        <Grid>
-          <Text size="24px" bold>
-            루피의 일상
-          </Text>
+        <Grid padding="0px 5px">
+          <Button
+            no_bg
+            _onClick={() => {
+              history.push("/");
+            }}
+          >
+            <Text size="24px" bold>
+              루피의 일상
+            </Text>
+          </Button>
         </Grid>
         <Grid is_flex>
           <Button
@@ -52,12 +75,14 @@ const Header = (props) => {
             _onClick={() => {
               history.push("/login");
             }}
+            margin="0 3px"
           ></Button>
           <Button
             text="회원가입"
             _onClick={() => {
               history.push("/signup");
             }}
+            margin="0 3px"
           ></Button>
         </Grid>
       </Grid>
@@ -65,55 +90,55 @@ const Header = (props) => {
   );
 };
 
-// if (Permit) {
-//   return (
-//     <Permit>
-//       <Grid is_flex padding="5px 0px">
-//         <Grid>
-//           <Text size="24px" bold>
-//             루피의 일상
-//           </Text>
+//   if (Permit) {
+//     return (
+//       <Permit>
+//         <Grid is_flex padding="5px 0px">
+//           <Grid>
+//             <Text size="24px" bold>
+//               루피의 일상
+//             </Text>
+//           </Grid>
+//           <Grid is_flex>
+//             <Button text="내정보"></Button>
+//             <Button text="알림"></Button>
+//             <Button
+//               text="로그아웃"
+//               _onClick={() => {
+//                 dispatch(userActions.logoutFB());
+//               }}
+//             ></Button>
+//           </Grid>
 //         </Grid>
-//         <Grid is_flex>
-//           <Button text="내정보"></Button>
-//           <Button text="알림"></Button>
-//           <Button
-//             text="로그아웃"
-//             _onClick={() => {
-//               dispatch(userActions.logoutFB());
-//             }}
-//           ></Button>
+//       </Permit>
+//     );
+//   } else {
+//     return (
+//       <React.Fragment>
+//         <Grid is_flex padding="5px 0px">
+//           <Grid>
+//             <Text size="24px" bold>
+//               루피의 일상
+//             </Text>
+//           </Grid>
+//           <Grid is_flex>
+//             <Button
+//               text="로그인"
+//               _onClick={() => {
+//                 history.push("/login");
+//               }}
+//             ></Button>
+//             <Button
+//               text="회원가입"
+//               _onClick={() => {
+//                 history.push("/signup");
+//               }}
+//             ></Button>
+//           </Grid>
 //         </Grid>
-//       </Grid>
-//     </Permit>
-//   );
-// } else {
-//   return (
-//     <React.Fragment>
-//       <Grid is_flex padding="5px 0px">
-//         <Grid>
-//           <Text size="24px" bold>
-//             루피의 일상
-//           </Text>
-//         </Grid>
-//         <Grid is_flex>
-//           <Button
-//             text="로그인"
-//             _onClick={() => {
-//               history.push("/login");
-//             }}
-//           ></Button>
-//           <Button
-//             text="회원가입"
-//             _onClick={() => {
-//               history.push("/signup");
-//             }}
-//           ></Button>
-//         </Grid>
-//       </Grid>
-//     </React.Fragment>
-//   );
-// }
+//       </React.Fragment>
+//     );
+//   }
 // };
 
 Header.defaultProps = {};

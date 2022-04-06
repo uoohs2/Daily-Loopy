@@ -25,6 +25,7 @@ const Signup = (props) => {
     }
 
     dispatch(userActions.loginFB(id, pwd));
+
     if (pwd !== pwd_check) {
       window.alert("비밀번호확인이 일치하지 않습니다.");
       return;
@@ -59,6 +60,7 @@ const Signup = (props) => {
         <Grid padding="16px 0px">
           <Input
             label="비밀번호"
+            type="password"
             placeholder="비밀번호를 입력하세요."
             _onChange={(e) => {
               setPwd(e.target.value);
@@ -68,6 +70,7 @@ const Signup = (props) => {
         <Grid padding="16px 0px">
           <Input
             label="비밀번호 확인"
+            type="password"
             placeholder="비밀번호 확인을 입력하세요."
             _onChange={(e) => {
               setPwdCheck(e.target.value);

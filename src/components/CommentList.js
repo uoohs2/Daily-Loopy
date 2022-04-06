@@ -1,21 +1,37 @@
 import React from "react";
 import { Grid, Text, Image } from "../elements";
 
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as commentActions } from "../redux/modules/comment";
+
 const CommentList = (props) => {
+  const dispatch = useDispatch();
+  const comment_list = useSelector((state) => state.comment.list);
+  const { post_id } = props;
+  console.log();
+
+  React.useEffect(() => {
+    if (!comment_list[post_id]) {
+      dispatch(commentActions.getCommentFB(post_id));
+    }
+  }, []);
+
+  if (!comment_list[post_id] || !post_id) {
+    return null;
+  }
   return (
     <React.Fragment>
       <Grid padding="16px">
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
+        {comment_list[post_id].map((c) => {
+          return <CommentItem key={c.id} {...c} />;
+        })}
       </Grid>
     </React.Fragment>
   );
+};
+
+CommentList.defaultProps = {
+  post_id: null,
 };
 
 export default CommentList;
@@ -26,7 +42,7 @@ const CommentItem = (props) => {
   return (
     <Grid is_flex>
       <Grid is_flex width="auto">
-        <Image shape="circle" />
+        <Image shape="circle" border="2px solid pink" />
         <Text>{user_name}</Text>
       </Grid>
       <Grid is_flex margin="0px 0px 0px 15px">

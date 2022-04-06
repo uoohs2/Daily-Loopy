@@ -4,6 +4,9 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 import User from "./modules/user"; //user의 리듀서를 가져온 것이다.
+import Post from "./modules/post";
+import Image from "./modules/image";
+import Comment from "./modules/comment";
 
 //직접만든 히스토리(스토어에 넣어줄거임)
 export const history = createBrowserHistory();
@@ -11,6 +14,9 @@ export const history = createBrowserHistory();
 //리듀서 만들기
 const rootReducer = combineReducers({
   user: User,
+  post: Post,
+  image: Image,
+  comment: Comment,
   router: connectRouter(history),
 });
 
