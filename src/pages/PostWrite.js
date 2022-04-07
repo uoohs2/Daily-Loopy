@@ -65,14 +65,14 @@ const PostWrite = (props) => {
   }
   return (
     <React.Fragment>
-      <Grid padding="16px">
-        <Text size="20px" bold>
+      <Grid padding="16px 10px">
+        <Text size="20px" bold width="auto">
           {is_edit ? "게시글 수정" : "게시글 작성"}
         </Text>
         <Upload></Upload>
       </Grid>
       <Grid>
-        <Grid padding="16px">
+        <Grid padding="16px 10px">
           <Text size="20px" bold>
             미리보기
           </Text>
@@ -93,7 +93,6 @@ const PostWrite = (props) => {
           multiLine
           rows
           label="게시글 내용"
-          Placeholder="게시글 작성"
         />
       </Grid>
       <Grid padding="16px">

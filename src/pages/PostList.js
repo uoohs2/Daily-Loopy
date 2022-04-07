@@ -14,14 +14,14 @@ const PostList = (props) => {
   const user_info = useSelector((state) => state.user.user);
 
   React.useEffect(() => {
-    if (post_list.length === 0) {
+    if (post_list.length < 2) {
+      //getOnePostFB로 호출해서 이미 한개가 존재하니까
       dispatch(postActions.getPostFB());
     }
   }, []);
-
   return (
     <React.Fragment>
-      <Grid bg="#ffeffa" padding="20px 0px">
+      <Grid>
         {post_list.map((v, i) => {
           if (v.user_info.user_id === user_info?.uid) {
             return (

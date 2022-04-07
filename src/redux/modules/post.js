@@ -17,9 +17,8 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
   post_id,
   post,
 }));
-const deletePost = createAction(DELETE_POST, (post_id, post) => ({
+const deletePost = createAction(DELETE_POST, (post_id) => ({
   post_id,
-  post,
 }));
 
 //초기값
@@ -28,16 +27,8 @@ const initialState = {
   paging: { star: null, next: null, size: 3 },
 };
 const initialPost = {
-  //게시글 하나에 들어가는 기본적인 정보
-  // id: 0,
-  // user_info: {
-  //   user_name: "uooh",
-  //   user_profile:
-  //     "https://mblogthumb-phinf.pstatic.net/MjAyMDA4MDNfMjAx/MDAxNTk2NDQ1NjUzODA0.cUdM6Gatr8jKhmBwWFhGJaeVg6t0wPwkwshA11gZuY0g.zot86j9Rxj7824AkPhlT_5Bv3MkaP2-MxCELXiMks9kg.JPEG.hwadamtat/IMG_5813.JPG?type=w800",
-  // },
-  image_url:
-    "https://mblogthumb-phinf.pstatic.net/MjAyMDA4MDNfMjAx/MDAxNTk2NDQ1NjUzODA0.cUdM6Gatr8jKhmBwWFhGJaeVg6t0wPwkwshA11gZuY0g.zot86j9Rxj7824AkPhlT_5Bv3MkaP2-MxCELXiMks9kg.JPEG.hwadamtat/IMG_5813.JPG?type=w800",
-  contents: "이불속에 평생 누워있을래,,",
+  image_url: "",
+  contents: "",
   comment_count: 0,
   insert_dt: moment().format("YYYY-MM-DD kk:mm:ss"),
 };
@@ -47,50 +38,53 @@ const getPostFB = () => {
   return function (dispatch, getState, { history }) {
     const postDB = firestore.collection("post");
 
-    postDB.get().then((docs) => {
-      let post_list = [];
-      docs.forEach((doc) => {
-        //정보를 모두 써주는 방법
-        // console.log(doc.id, doc.data());
-        // let post = {
-        //   id: doc.id,
-        //   user_info: {
-        //     user_name: doc.data().user_name,
-        //     user_profile: doc.data().user_profile,
-        //     user_id: doc.data().user_id,
-        //   },
-        //   image_url: doc.data().image_url,
-        //   contents: doc.data().contents,
-        //   comment_count: doc.data().comment_count,
-        //   insert_dt: doc.data().insert_dt,
-        // };
-        // post_list.push(post);
+    postDB
+      .orderBy("insert_dt", "desc")
+      .get()
+      .then((docs) => {
+        let post_list = [];
+        docs.forEach((doc) => {
+          //정보를 모두 써주는 방법
+          // console.log(doc.id, doc.data());
+          // let post = {
+          //   id: doc.id,
+          //   user_info: {
+          //     user_name: doc.data().user_name,
+          //     user_profile: doc.data().user_profile,
+          //     user_id: doc.data().user_id,
+          //   },
+          //   image_url: doc.data().image_url,
+          //   contents: doc.data().contents,
+          //   comment_count: doc.data().comment_count,
+          //   insert_dt: doc.data().insert_dt,
+          // };
+          // post_list.push(post);
 
-        //내장함수 사용해서 간단하게 쓰는 방법
-        //key값들을 배열로 만들고 내장함수 reduce써줌.
-        let _post = doc.data();
-        // let post = Object.keys(_post);
-        // console.log(post);
-        let post = Object.keys(_post).reduce(
-          (acc, cur) => {
-            if (cur.indexOf("user_") !== -1) {
-              return {
-                ...acc,
-                user_info: { ...acc.user_info, [cur]: _post[cur] },
-              };
+          //내장함수 사용해서 간단하게 쓰는 방법
+          //key값들을 배열로 만들고 내장함수 reduce써줌.
+          let _post = doc.data();
+          // let post = Object.keys(_post);
+          // console.log(post);
+          let post = Object.keys(_post).reduce(
+            (acc, cur) => {
+              if (cur.indexOf("user_") !== -1) {
+                return {
+                  ...acc,
+                  user_info: { ...acc.user_info, [cur]: _post[cur] },
+                };
+              }
+              return { ...acc, [cur]: _post[cur] };
+            },
+            {
+              id: doc.id,
+              user_info: {},
             }
-            return { ...acc, [cur]: _post[cur] };
-          },
-          {
-            id: doc.id,
-            user_info: {},
-          }
-        );
-        post_list.push(post);
+          );
+          post_list.push(post);
+        });
+        console.log(post_list);
+        dispatch(setPost(post_list));
       });
-      console.log(post_list);
-      dispatch(setPost(post_list));
-    });
   };
 };
 
@@ -157,7 +151,7 @@ const editPostFB = (post_id = null, post = {}) => {
 
     const _post_index = getState().post.list.findIndex((p) => p.id === post_id);
     const _post = getState().post.list[_post_index];
-    // console.log(_post);
+    console.log(_post);
 
     const postDB = firestore.collection("post");
     if (_image === _post.image_url) {
@@ -200,12 +194,20 @@ const editPostFB = (post_id = null, post = {}) => {
   };
 };
 
-const deletePostFB = (post_id = null, post = {}) => {
+const deletePostFB = (post_id = null) => {
   return function (dispatch, getState, { history }) {
-    if (!post_id) {
-      console.log("게시물 정보를 찾을 수 없어요.");
-      return;
-    }
+    const postDB = firestore.collection("post");
+    console.log(postDB);
+    postDB
+      .doc(post_id)
+      .delete()
+      .then(() => {
+        dispatch(deletePost(post_id));
+      })
+      .catch((err) => {
+        window.alert("게시물 삭제가 실패했습니다.");
+        console.log("게시물 삭제가 실패", err);
+      });
   };
 };
 
@@ -271,7 +273,7 @@ export default handleActions(
       }),
     [DELETE_POST]: (state, action) =>
       produce(state, (draft) => {
-        draft.list.unshift(action.payload.post);
+        draft.list = draft.list.filter((v) => v.id !== action.payload.post_id);
       }),
   },
   initialState

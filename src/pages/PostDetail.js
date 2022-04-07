@@ -20,13 +20,10 @@ const PostDetail = (props) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (post_list.length < 2) {
-      dispatch(poastActions.get0nePostFB(id));
+    if (post) {
+      return;
     }
-    // if (post) {
-    //   return;
-    // }
-    // dispatch(poastActions.get0nePostFB(id));
+    dispatch(poastActions.get0nePostFB(id));
   }, []);
   return (
     <React.Fragment>

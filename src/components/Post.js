@@ -2,12 +2,14 @@ import React from "react";
 import { Grid, Image, Text, Button } from "../elements";
 import { history } from "../redux/configureStore";
 import { actionCreators as postActions } from "../redux/modules/post";
+import { useDispatch } from "react-redux";
 
 const Post = (props) => {
+  const dispatch = useDispatch();
   return (
     <React.Fragment>
-      <Grid margin="20px 0px 40px 0px">
-        <Grid is_flex>
+      <Grid margin="0px 0px 40px 0px" border="1px dotted #b5b2b4">
+        <Grid is_flex margin="10px 0px 0px 0px">
           <Grid is_flex width="auto">
             <Image shape="circle" border="2px solid pink" src_01={props.src} />
             <Text bold>{props.user_info.user_name}</Text>
@@ -32,11 +34,10 @@ const Post = (props) => {
                 width="auto"
                 margin="0px 3px"
                 _onClick={(e) => {
-                  // history.replace("/");
                   e.stopPropagation();
                   if (window.confirm("게시물을 삭제하시겠어요?") === true) {
                     console.log("네");
-                    // dispatch(deleteDictionaryFB(cards[i].id));
+                    dispatch(postActions.deletePostFB(props.id));
                   }
                 }}
               >
