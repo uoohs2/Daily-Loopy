@@ -206,7 +206,7 @@ const deletePostFB = (post_id = null) => {
       })
       .catch((err) => {
         window.alert("게시물 삭제가 실패했습니다.");
-        console.log("게시물 삭제가 실패", err);
+        console.log("게시물 삭제 실패", err);
       });
   };
 };

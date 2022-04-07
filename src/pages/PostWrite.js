@@ -24,6 +24,8 @@ const PostWrite = (props) => {
     }
     if (is_edit) {
       dispatch(imageActions.setPreview(_post.image_url));
+    } else {
+      dispatch(imageActions.setPreview(null));
     }
   }, []);
 
@@ -74,7 +76,7 @@ const PostWrite = (props) => {
       <Grid>
         <Grid padding="16px 10px">
           <Text size="20px" bold>
-            미리보기
+            미리보기firebase init
           </Text>
         </Grid>
         <Image

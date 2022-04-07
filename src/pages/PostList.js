@@ -19,6 +19,7 @@ const PostList = (props) => {
       dispatch(postActions.getPostFB());
     }
   }, []);
+
   return (
     <React.Fragment>
       <Grid>
