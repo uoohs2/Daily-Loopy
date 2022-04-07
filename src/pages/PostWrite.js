@@ -76,7 +76,7 @@ const PostWrite = (props) => {
       <Grid>
         <Grid padding="16px 10px">
           <Text size="20px" bold>
-            미리보기firebase init
+            미리보기
           </Text>
         </Grid>
         <Image
